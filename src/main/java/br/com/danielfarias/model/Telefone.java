@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Telefone {
 	
@@ -20,6 +22,7 @@ public class Telefone {
 	private String numero;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore()
 	private Pessoa pessoa;
 	
 	public Telefone() {}

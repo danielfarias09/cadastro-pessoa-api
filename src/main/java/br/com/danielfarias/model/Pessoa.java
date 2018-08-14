@@ -9,13 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import br.com.danielfarias.util.IdadeConverter;
+
 @Entity
-@Table(name = "pessoa")
 public class Pessoa {
 	
 	@Id
@@ -31,7 +32,10 @@ public class Pessoa {
 	
 	private String email;
 	
-	@OneToMany(mappedBy	="pessoa",fetch=FetchType.EAGER)
+	@Transient
+	private String idade;
+	
+	@OneToMany(mappedBy	="pessoa",fetch=FetchType.EAGER, orphanRemoval = true)
 	@Cascade(CascadeType.ALL)
 	private List<Telefone> telefones;
 	
@@ -83,5 +87,13 @@ public class Pessoa {
 
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
+	}
+
+	public String getIdade() {
+		return IdadeConverter.calcularIdade(dataNascimento);
+	}
+
+	public void setIdade(String idade) {
+		this.idade = idade;
 	}
 }
