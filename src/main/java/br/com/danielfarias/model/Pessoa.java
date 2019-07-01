@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.danielfarias.util.IdadeConverter;
 
@@ -27,7 +28,8 @@ public class Pessoa {
 	private String nome;
 	
 	private String cpf;
-	
+
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	
 	private String email;
@@ -90,7 +92,10 @@ public class Pessoa {
 	}
 
 	public String getIdade() {
-		return IdadeConverter.calcularIdade(dataNascimento);
+		if(dataNascimento != null) {
+			return IdadeConverter.calcularIdade(dataNascimento);
+		}
+		return null;
 	}
 
 	public void setIdade(String idade) {
