@@ -1,7 +1,6 @@
 package br.com.danielfarias.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.danielfarias.model.Pessoa;
 import br.com.danielfarias.service.PessoaService;
+import br.com.danielfarias.to.PessoaTO;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -22,15 +22,10 @@ public class PessoaController {
 	
 	@Autowired
 	private PessoaService pessoaService;
-
-	@RequestMapping(value = "/validarLogin", method = RequestMethod.GET, produces="application/json")
-	public String validarLogin() {
-		return "Usuário autenticado com sucesso!";
-	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Pessoa> list(@Param("nome") String nome, @Param("cpf") String cpf) {
-		return pessoaService.getPessoas(nome,cpf);
+		return pessoaService.findPessoas(new PessoaTO(nome,cpf));
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes="application/json")
@@ -46,13 +41,13 @@ public class PessoaController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Optional<Pessoa> get(@PathVariable("id") Long id) {
+	public Pessoa get(@PathVariable("id") Long id) {
 		return pessoaService.findById(id);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
-		pessoaService.deleteById(id);
+		pessoaService.delete(id);
 		return ResponseEntity.ok().body(HttpStatus.OK);
 	}
 }

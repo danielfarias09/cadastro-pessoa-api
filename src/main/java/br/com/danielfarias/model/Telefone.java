@@ -10,8 +10,10 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Telefone {
+public class Telefone implements BaseEntity<Long>{
 	
+	private static final long serialVersionUID = 2945161561939599915L;
+
 	@Id
 	@GeneratedValue
 	(strategy=GenerationType.IDENTITY)

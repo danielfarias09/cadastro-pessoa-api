@@ -9,8 +9,10 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Usuario {
+public class Usuario implements BaseEntity<Long>{
 	
+	private static final long serialVersionUID = -2717302667704625032L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -22,11 +24,11 @@ public class Usuario {
 	@JsonIgnore
 	private String password;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

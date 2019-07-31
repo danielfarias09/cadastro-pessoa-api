@@ -1,4 +1,4 @@
-package br.com.danielfarias.service;
+package br.com.danielfarias.dao;
 
 import java.util.List;
 
@@ -8,10 +8,7 @@ import br.com.danielfarias.model.Pessoa;
 import br.com.danielfarias.to.PessoaTO;
 
 @NoRepositoryBean
-public interface PessoaService extends BaseService<Pessoa>{
+public interface PessoaDao extends BaseDao<Pessoa>{
 	
-	List<Pessoa> findPessoas(PessoaTO to);
-	
-	Pessoa save(Pessoa pessoa);
-	
+	List<Pessoa> findPessoas(PessoaTO pessoa);
 }

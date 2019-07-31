@@ -18,8 +18,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import br.com.danielfarias.util.IdadeConverter;
 
 @Entity
-public class Pessoa {
+public class Pessoa implements BaseEntity<Long>{
 	
+	private static final long serialVersionUID = -4032798442163494733L;
+
 	@Id
 	@GeneratedValue
 	(strategy=GenerationType.IDENTITY)
