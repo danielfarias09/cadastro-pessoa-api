@@ -3,16 +3,16 @@ package br.com.danielfarias.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import br.com.danielfarias.util.IdadeConverter;
@@ -39,8 +39,8 @@ public class Pessoa implements BaseEntity<Long>{
 	@Transient
 	private String idade;
 	
-	@OneToMany(mappedBy	="pessoa",fetch=FetchType.EAGER, orphanRemoval = true)
-	@Cascade(CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name="pessoa_id", nullable = false)
 	private List<Telefone> telefones;
 	
 	public Pessoa() {}

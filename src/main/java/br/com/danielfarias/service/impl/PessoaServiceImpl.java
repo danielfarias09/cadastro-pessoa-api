@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import br.com.danielfarias.dao.BaseDao;
 import br.com.danielfarias.dao.PessoaDao;
 import br.com.danielfarias.model.Pessoa;
-import br.com.danielfarias.model.Telefone;
 import br.com.danielfarias.service.PessoaService;
 import br.com.danielfarias.to.PessoaTO;
 
@@ -26,18 +25,7 @@ public class PessoaServiceImpl extends BaseServiceImpl<Pessoa> implements Pessoa
 	
 	@Override
 	public Pessoa save(Pessoa pessoa) {
-		atribuiTelefonePessoa(pessoa);
 		return pessoaDao.save(pessoa);
-	}
-	
-	private void atribuiTelefonePessoa(Pessoa pessoa) {	
-		if(pessoa.getTelefones() != null) {
-			for(Telefone telefone: pessoa.getTelefones()) {
-				if(telefone.getPessoa() == null){
-					telefone.setPessoa(pessoa);
-				}
-			}
-		}
 	}
 
 	@Override
