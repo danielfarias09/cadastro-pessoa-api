@@ -1,6 +1,7 @@
 package br.com.danielfarias.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,10 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import br.com.danielfarias.util.IdadeConverter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Pessoa implements BaseEntity<Long>{
@@ -27,13 +27,15 @@ public class Pessoa implements BaseEntity<Long>{
 	(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
 	private String nome;
 	
 	private String cpf;
 
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private Date dataNascimento;
+	@JsonFormat(pattern="dd-MM-yyyy")
+	private LocalDate dataNascimento;
 	
+	@NotNull
 	private String email;
 	
 	@Transient
@@ -69,11 +71,11 @@ public class Pessoa implements BaseEntity<Long>{
 		this.cpf = cpf;
 	}
 
-	public Date getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -95,7 +97,8 @@ public class Pessoa implements BaseEntity<Long>{
 
 	public String getIdade() {
 		if(dataNascimento != null) {
-			return IdadeConverter.calcularIdade(dataNascimento);
+			Period idade = Period.between(dataNascimento, LocalDate.now());
+			return idade.getYears() + " anos";
 		}
 		return null;
 	}
